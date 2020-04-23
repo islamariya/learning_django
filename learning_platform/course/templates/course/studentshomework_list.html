@@ -1,0 +1,45 @@
+{% extends 'course/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="col-md-offset-3">
+<div class="row">
+    <div class="col"></div>
+    <div class="col-10"><h2>Домашние задания</h2></div>
+    <div class="col"></div>
+</div>
+<div>
+    {% if user.is_teacher %}
+    {% for homework in homeworks.teacher %}
+    <div class="row align-items-center">
+        <div class="col"></div>
+        <div class="col-10"><h4> №{{homework.homework.sequence_number}} {{homework.homework.title}} </h4>
+            <h6>Статус: {{ homework.get_status_display }}</h6>
+            <a href="{% url 'course:my_homework_detail' homework.pk %}">Подробнее</a>
+            <hr>
+        </div>
+        <div class="col"></div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <hr>
+    <div>Раздел студента</div>
+    {% if user.is_student %}
+    {% for homework in homeworks.student %}
+    <div class="row align-items-center">
+        <div class="col"></div>
+        <div class="col-10"><h4> №{{homework.homework.sequence_number}} {{homework.homework.title}} </h4>
+            <h6>Статус: {{ homework.get_status_display }}</h6>
+            <a href="{% url 'course:my_homework_detail' homework.pk %}">Подробнее</a>
+            <hr>
+        </div>
+        <div class="col"></div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+
+
+</div>
+{% endblock %}

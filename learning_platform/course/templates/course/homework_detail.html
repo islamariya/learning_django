@@ -1,0 +1,25 @@
+{% extends 'course/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="content">
+        <h5> Курс {{ homework.course_flow.course }}</h5>
+        <h3>Домашнее задание № {{ homework.sequence_number }}</h3>
+        <h4>{{ homework.title }}</h4>
+        <hr>
+        <h6>Описание задания</h6>
+        <h7>{{ homework.description }}</h7>
+        <hr>
+        <h6>Необходимо сдать до {{ homework.due_date }}</h6>
+
+        {% if user.is_staff %}
+        <div><a href="{% url 'course:homework_update' homework.pk %}">редактировать</a> </div>
+        <div><a href="{% url 'course:homework_delete' homework.pk %}">Удалить </a></div>
+        {% endif %}
+
+        {% if user.is_student %}
+        <div>Отправить задание на проверку</div>
+        {% endif%}
+    </div>
+
+{% endblock %}

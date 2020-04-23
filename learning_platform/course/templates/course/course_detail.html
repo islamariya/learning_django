@@ -1,0 +1,28 @@
+{% extends 'course/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="content">
+        <h2>{{ course.title }}</h2>
+        <h5>{{ course.category }}</h5>
+        <hr>
+
+        <h4>{{ course.short_description }} </h4>
+        <p>{{ course.overview }}</p>
+        <p>Продолжительность курса {{ course.duration}}</p>
+        <p>Цена {{ course.price}}</p>
+    </div>
+<div>
+    <hr>
+    <h4>Программа курса</h4>
+    <div>Вас ждут онлайн-лекции и офлайн-воркшопы с практикующими специалистами.</div>
+    <a href="{% url 'course:lectures' course.pk %}">Учебная программа</a>
+</div>
+
+<hr>
+        {% if user.is_staff %}
+        <div><a href="{% url 'course:course_update' course.pk %}">Редактировать описание </a></div>
+        <div><a href="{% url 'course:course_delete' course.pk %}">Удалить курс</a></div>
+        {% endif %}
+
+{% endblock %}

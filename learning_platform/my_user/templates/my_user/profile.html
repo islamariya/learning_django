@@ -1,0 +1,51 @@
+{% extends "my_user/base.html" %}
+{% load static %}
+
+{% block header_title %} <h2>Личный кабинет</h2> {% endblock %}
+
+{% block content %}
+<div>
+    {% if user.is_teacher %}
+    <h4>Преподавательская</h4>
+    <hr>
+    <h6><a href="{% url 'course:homework_review' pk=1 %}">Задания на проверку</a></h6>
+    {% endif %}
+
+    <br>
+    <br>
+    <br>
+    {% if user.is_student %}
+    <h4>Мои курсы</h4>
+    <hr>
+    <h6>Вы записаны на следующие курсы:</h6>
+    {% if students_courses|length > 0 %}
+    {% for course in students_courses %}
+    {{ course.course_flow }}
+    <div><a href="{% url 'course:timetable' course.course_flow.pk %}">Расписание занятий</a></div>
+    <div><a href="{% url 'my_user:my_course_homework' course.course_flow.pk %}">Домашние задания</a></div>
+    <br>
+    {% endfor %}
+    {% else %}
+    <div>Вы не записаны ни на один курс</div>
+    {% endif %}
+    {% endif %}
+    <br>
+    <br>
+    <br>
+
+    {% if user.is_staff %}
+    <h4>Управление содержимым</h4>
+    <br>
+    <h6>Управление курсами</h6>
+    <h6><a href="{% url 'course:all_courses' %}">Редактировать курсы</a></h6>
+    <h6><a href="{% url 'course:course_create' %}">Добавить новый курс</a></h6>
+    <br>
+    <h6>Наборы групп</h6>
+    <h6><a href="{% url 'course:all_flows' %}">Редактировать потоки</a> </h6>
+    <h6><a href="{% url 'course:create_flow' %}">Добавить поток</a> </h6>
+    <br>
+    {% endif %}
+
+</div>
+
+{% endblock %}

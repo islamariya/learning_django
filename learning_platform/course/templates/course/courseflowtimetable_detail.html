@@ -1,0 +1,23 @@
+{% extends 'course/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="content">
+        <div><h3> {{ courseflowtimetable.lesson.title }}</h3>
+            курса {{ courseflowtimetable.course_flow.course.title }}</div>
+        <div>
+            <span>Занятие №{{ courseflowtimetable.lesson.sequence_number}}</span>
+        </div>
+        <hr>
+        <div>{{ courseflowtimetable.lesson.description }}</div>
+        <hr>
+
+
+        {% if user.is_staff %}
+        <div><a href="{% url 'course:timetable_update' courseflowtimetable.pk %}">редактировать</a> </div>
+        <div><a href="{% url 'course:timetable_delete' courseflowtimetable.pk %}">удалить </a></div>
+
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'course/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="content">
+        <h2> Курс {{ courseflows.course.title }}</h2>
+        <h6>{{ courseflows.course.category }}</h6>
+        <h5>{{ courseflows.course.short_description }} </h5>
+        <hr>
+        <h6>Продолжительность курса  {{ courseflows.course.duration}}</h6>
+        <h6> Начало занятий {{ courseflows.start_date }}</h6>
+        <hr>
+        <p>{{ courseflows.course.overview }}</p>
+
+        <h5>Цена {{ courseflows.course.price}}</h5>
+        <hr>
+
+        <h3>Расписание занятий</h3>
+        <div>Вас ждут онлайн-лекции и офлайн-воркшопы с практикующими специалистам</div>
+        <a href="{% url 'course:timetable' courseflows.pk %}">Расписание занятий</a>
+        <hr>
+
+        <h3>Домашние задания</h3>
+            <a href="{% url 'course:homework' courseflows.pk %}">Посмотреть</a>
+
+        <hr>
+
+
+        {% if user.is_staff %}
+        <div><a href="{% url 'course:flow_update' courseflows.pk %}">редактировать</a> </div>
+        <div><a href="{% url 'course:flow_delete' courseflows.pk %}">Удалить </a></div>
+
+        {% endif %}
+    </div>
+
+{% endblock %}

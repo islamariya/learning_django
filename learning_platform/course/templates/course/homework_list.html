@@ -1,0 +1,47 @@
+{% extends 'course/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="col-md-offset-3">
+<div class="row">
+    <div class="col"></div>
+    <div class="col-10"><h2>Домашние задания</h2></div>
+    <div class="col"></div>
+</div>
+<div>
+    {% for homework in homeworks %}
+    <div class="row align-items-center">
+        <div class="col"></div>
+        <div class="col-10"><h4> №{{homework.sequence_number}} {{homework.title}} </h4>
+            <a href="{% url 'course:homework_detail' homework.pk %}">Подробнее</a>
+            {% if user.is_staff %}
+
+            {% endif %}
+            <h6>{{ homework.description }}</h6>
+            <hr>
+
+        </div>
+        <div class="col"></div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if is_paginated %}
+    <div class="article-paginator">
+        <span class="page-links">
+            <a href="{% url 'course:index' %}?page=1"> << </a>
+        {% if page_obj.has_previous %}
+            <a href="{% url 'course:index' %}?={{ page_obj.previous_page_number }}"> < </a>
+        {% endif %}
+        <span class="current-page">
+            страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </span>
+        {% if page_obj.has_next %}
+            <a href="{% url 'course:index' %}?page={{ page_obj.next_page_number }}"> < </a>
+        {% endif %}
+            <a href="{% url 'course:index' %}?page={{ page_obj.paginator.num_pages }}"> > </a>
+        </span>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

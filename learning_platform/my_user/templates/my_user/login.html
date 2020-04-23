@@ -1,0 +1,21 @@
+{% extends 'my_user/base.html' %}
+{% load static %}
+
+{% block title%} {{ title|title }} {% endblock %}
+
+{% block content %}
+    <div class="h2">
+        Вход в систему
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {{ login_form.as_p }}
+        <br>
+        <input type="submit" value="войти">
+    </form>
+    <button>
+        <a href="{% url 'users:register' %}">
+            зарегистрироваться
+        </a>
+    </button>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'my_user/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col"></div>
+    <div class="col"><h2>Регистрация нового пользователя</h2></div>
+    <div class="col"></div>
+</div>
+
+<div class="row">
+    <div class="col"></div>
+    <div class="col">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Зарегистрироваться">
+        </form>
+    </div>
+    <div class="col"></div>
+</div>
+
+
+{% endblock %}

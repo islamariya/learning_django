@@ -1,0 +1,15 @@
+{% extends 'course/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="course-delete_confirm">
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="удалить курс {{ course.title }}?">
+    </form>
+    <button>
+        <a href="{% url 'course:index' %}">Отмена</a>
+    </button>
+</div>
+
+{% endblock %}

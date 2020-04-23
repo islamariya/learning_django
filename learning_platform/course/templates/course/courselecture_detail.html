@@ -1,0 +1,23 @@
+{% extends 'course/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="content">
+        <h2> {{ courselecture.title }}</h2>
+        <div>
+            <span>Занятие №{{ courselecture.sequence_number}}</span>
+            <span>Курса {{ courselecture.course.title }}</span>
+        </div>
+        <hr>
+        <div>{{ courselecture.description }}</div>
+        <hr>
+
+
+        {% if user.is_staff %}
+        <div><a href="{% url 'course:lecture_update' courselecture.pk %}">редактировать</a> </div>
+        <div><a href="{% url 'course:lecture_delete' courselecture.pk %}">Удалить </a></div>
+
+        {% endif %}
+    </div>
+
+{% endblock %}
