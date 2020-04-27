@@ -243,8 +243,6 @@ class StudentHomeworkDetailView(DetailView):
 class StudentHomeworkSendView(UpdateView):
     model = StudentsHomework
     form_class = StudentHomeworkSendForm
-    # form_class = StudentHomeworkSendForm
-    # secondary_form_class = StudentHomeworkCheckForm
     success_url = reverse_lazy("my_user:profile")
 
     def get_form_class(self):
@@ -256,15 +254,6 @@ class StudentHomeworkSendView(UpdateView):
             self.form_class = StudentHomeworkSendForm
             return self.form_class
 
-
-    # def __init__(self, request, *args, **kwargs):
-    #     super(StudentHomeworkSendView, self).__init__(*args, **kwargs)
-    #     user = self.request.user
-    #     if user.is_student:
-    #         self.form_class = StudentHomeworkSendForm
-    #     elif user.is_teacher:
-    #         self.form_class = StudentHomeworkCheckForm
-
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         if request.user.is_student:
@@ -272,15 +261,3 @@ class StudentHomeworkSendView(UpdateView):
             self.object.status = 1
             self.object.save()
         return super().post(request, *args, **kwargs)
-
-
-# class ReviewHomeworkList(TemplateView):
-#
-#     class Meta:
-#         model = StudentsHomework
-#         # queryset = StudentsHomework.objects.filter(status=1).all()
-#         context_object_name = "homeworks"
-#         paginate_by = 10
-#
-#         def get_queryset(self):
-#             return self.model.objects.filter(status=1).all()

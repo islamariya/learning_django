@@ -5,7 +5,6 @@ import course.views as course
 app_name = 'course'
 
 urlpatterns = [
-    # path("", course.CoursesListView.as_view(), name="index"),
     path("", course.CoursesFlowsListView.as_view(), name="index"),
     path("all_courses/", course.CoursesListView.as_view(), name="all_courses"),
     path("all_courses/<int:pk>/", course.CourseDetailView.as_view(), name="course_detail"),
@@ -41,6 +40,4 @@ urlpatterns = [
     path("my_homework/<int:pk>/", course.StudentHomeworkDetailView.as_view(), name="my_homework_detail"),
     path("my_homework/<int:pk>/update/", course.StudentHomeworkSendView.as_view(), name="send_homework"),
     path("homework_for_review/<int:pk>/", course.StudentsHomeworkListView.as_view(), name="homework_review"),
-
-
 ]
