@@ -53,7 +53,7 @@ class StudentsHomeworkType(DjangoObjectType):
         model = StudentsHomework
 
 
-class CourseFlowTimetable(DjangoObjectType):
+class CourseFlowTimetableType(DjangoObjectType):
     class Meta:
         model = CourseFlowTimetable
 
@@ -86,21 +86,21 @@ class Mutation:
 
 class Query:
     all_courses = graphene.List(CourseType)
-    retrieve_course = graphene.Field(CourseType, id=graphene.Int(), name=graphene.String())
+    retrieve_course = graphene.Field(CourseType, id=graphene.Int())
 
-    all_lessons_in_course = graphene.List(CourseLectureType, id=graphene.Int(), course=graphene.Int())
+    all_lessons_in_course = graphene.List(CourseLectureType, course=graphene.Int())
     # all types of lessons should be taught in course_flow
     retrieve_lesson = graphene.Field(CourseLectureType, id=graphene.Int())
 
-    all_course_flows = graphene.List(CourseFlowType, id=graphene.Int())
+    all_course_flows = graphene.List(CourseFlowType)
     retrieve_course_flow = graphene.Field(CourseFlowType, id=graphene.Int())
 
     all_course_homework = graphene.List(HomeworkType, course_flow=graphene.Int())
     retrieve_course_homework = graphene.Field(HomeworkType, id=graphene.Int())
 
-    course_timetable = graphene.List(CourseFlowTimetable, course_flow=graphene.Int())
+    course_timetable = graphene.List(CourseFlowTimetableType, course_flow=graphene.Int())
     # exact lesson in course_flow on specific date
-    retrieve_course_flow_lesson = graphene.Field(CourseFlowTimetable, id=graphene.Int())
+    retrieve_course_flow_lesson = graphene.Field(CourseFlowTimetableType, id=graphene.Int())
 
     all_students_enrolled = graphene.List(StudentEnrolleType, course_flow=graphene.Int())
 
@@ -140,8 +140,8 @@ class Query:
     def resolve_course_timetable(self, info, course_flow):
         return CourseFlowTimetable.objects.filter(course_flow=course_flow).all()
 
-    def resolve_course_flow_lesson(self, info, id):
-        return CourseFlowTimetable.get(pk=id)
+    def resolve_retrieve_course_flow_lesson(self, info, id):
+        return CourseFlowTimetable.objects.get(pk=id)
 
     def resolve_all_students_enrolled(self, info, course_flow):
         return StudentsEnrolled.objects.filter(course_flow=course_flow).all()
