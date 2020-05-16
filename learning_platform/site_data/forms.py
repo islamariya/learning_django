@@ -1,6 +1,8 @@
+from django.core.mail import mail_admins, send_mail
 from django.forms import ModelForm
 
 from site_data.models import UserCorrespondence
+from learning_platform.celery import app
 
 
 class ContactForm(ModelForm):

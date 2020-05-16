@@ -258,6 +258,6 @@ class StudentHomeworkSendView(UpdateView):
         self.object = self.get_object()
         if request.user.is_student:
             self.object.date_of_completion = datetime.datetime.now()
-            self.object.status = 1
+            self.object.status = StudentsHomework.HOMEWORK_STATUS_ON_REVIEW
             self.object.save()
         return super().post(request, *args, **kwargs)

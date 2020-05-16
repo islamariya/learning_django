@@ -8,6 +8,11 @@ with open('learning_platform/private_data/secret_keys.txt') as s_key:
 
 DEBUG = True
 
+with open('learning_platform/private_data/admin_data.txt') as admin_data_file:
+     admin_name, admin_email = admin_data_file.read().strip().split(',')
+
+ADMINS = [(admin_name, admin_email)]
+
 ALLOWED_HOSTS = []
 
 INTERNAL_IPS = ['127.0.0.1']
@@ -115,5 +120,33 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 100
 }
+
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER':'course_api.serializers.MyUserSerilizer' }
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_HOST_USER = 'courseplatformdj'
+
+with open('learning_platform/private_data/email.txt') as email_password_file:
+    email_password = email_password_file.read().strip()
+
+EMAIL_HOST_PASSWORD = email_password
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = 'Команда Онлайн университета'
+
+DEFAULT_TO_EMAIL = 'courseplatformdj@gmail.com'
+
+REDIS_HOST = 'localhost'
+
+REDIS_PORT = '6379'
+
+BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+
+BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'

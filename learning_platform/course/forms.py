@@ -17,11 +17,6 @@ class CourseForm(ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs["class"] = "form-control"
 
-    # def clean_title(self):
-    #     title = self.cleaned_data["title"]
-    #     if len(title) < 5:
-    #         raise ValidationError("Слишком короткий заголовок")
-
 
 #CourseFlows
 class CourseFlowsForm(ModelForm):

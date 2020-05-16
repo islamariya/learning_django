@@ -19,7 +19,7 @@ from .serializers import CourseSerializer, CourseFlowsSerializer, HomeworkSerili
 
 # Course
 class CourseApiViewSet(viewsets.ModelViewSet):
-    queryset = Course.objects.filter(is_active=True).all()
+    queryset = Course.objects.filter(is_active=True)
     serializer_class = CourseSerializer
 
     def destroy(self, request, *args, **kwargs):
@@ -31,7 +31,7 @@ class CourseApiViewSet(viewsets.ModelViewSet):
 
 # CourseFlow
 class CourseFlowsViewSet(viewsets.ModelViewSet):
-    queryset = CourseFlows.objects.filter(is_over=False).all()
+    queryset = CourseFlows.objects.filter(is_over=False)
     serializer_class = CourseFlowsSerializer
 
     def destroy(self, request, *args, **kwargs):
@@ -43,7 +43,7 @@ class CourseFlowsViewSet(viewsets.ModelViewSet):
 
 # CourseLecture
 class CourseLectureSet(viewsets.ModelViewSet):
-    queryset = CourseLecture.objects.filter(is_active=True).all()
+    queryset = CourseLecture.objects.filter(is_active=True)
     serializer_class = LectureSerilizer
 
     def destroy(self, request, *args, **kwargs):
@@ -55,7 +55,7 @@ class CourseLectureSet(viewsets.ModelViewSet):
     def get_queryset(self):
         '''Gets all lessons registered in Course against a `course`
         query parameter in the URL: api/root/course_lectures?course=2'''
-        queryset = CourseLecture.objects.filter(is_active=True).all()
+        queryset = CourseLecture.objects.filter(is_active=True)
         course = self.request.query_params.get('course', None)
         if course is not None:
             queryset = queryset.filter(course=course).all()
@@ -64,7 +64,7 @@ class CourseLectureSet(viewsets.ModelViewSet):
 
 # Homework
 class HomeworkViewSet(viewsets.ModelViewSet):
-    queryset = Homework.objects.filter(is_active=True).all()
+    queryset = Homework.objects.filter(is_active=True)
     serializer_class = HomeworkSerilizer
 
     def destroy(self, request, *args, **kwargs):
@@ -76,10 +76,10 @@ class HomeworkViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         '''Gets all homework needed to be done in CourseFlow against a `course_flow`
         query parameter in the URL: api/root/homework?course_flow=2'''
-        queryset = Homework.objects.filter(is_active=True).all()
+        queryset = Homework.objects.filter(is_active=True)
         course_flow = self.request.query_params.get('course_flow', None)
         if course_flow is not None:
-            queryset = queryset.filter(course_flow=course_flow).all()
+            queryset = queryset.filter(course_flow=course_flow)
         return queryset
 
 
@@ -91,7 +91,7 @@ class MyUserViewSet(viewsets.ModelViewSet):
 
 # StudentsEnrolled
 class StudentsEnrolledViewSet(viewsets.ModelViewSet):
-    queryset = StudentsEnrolled.objects.filter(is_active=True).all()
+    queryset = StudentsEnrolled.objects.filter(is_active=True)
     serializer_class = StudentsenrolledSerilizer
 
     def destroy(self, request, *args, **kwargs):
@@ -104,18 +104,17 @@ class StudentsEnrolledViewSet(viewsets.ModelViewSet):
     def my_courses(self, request, pk=None):
         """Returns all courses_flows current user enrolled. """
         user = request.user
-        courses = StudentsEnrolled.objects. \
-            filter(student=user).all()
+        courses = StudentsEnrolled.objects.filter(student=user)
         serializer = StudentsenrolledSerilizer(courses, many=True)
         return Response(serializer.data)
 
     def get_queryset(self):
         '''Gets all students registered in CourseFlow against a `course_flow`
         query parameter in the URL: api/root/studentsEnrolled?course_flow=2'''
-        queryset = StudentsEnrolled.objects.filter(is_active=True).all()
+        queryset = StudentsEnrolled.objects.filter(is_active=True)
         course_flow = self.request.query_params.get('course_flow', None)
         if course_flow is not None:
-            queryset = queryset.filter(course_flow=course_flow).all()
+            queryset = queryset.filter(course_flow=course_flow)
         return queryset
 
 
@@ -127,14 +126,14 @@ class StudentsHomeworkViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         course_flow = self.request.query_params.get('course_flow', None)
-        queryset = StudentsHomework.objects.filter(student__student__id=user.pk).all()
+        queryset = StudentsHomework.objects.filter(student__student__id=user.pk)
         if course_flow is not None:
-            queryset = queryset.filter(course_flow=course_flow).all()
+            queryset = queryset.filter(course_flow=course_flow)
         return queryset
 
 
 class CheckingHomeworkViewSet(viewsets.ModelViewSet):
-    queryset = StudentsHomework.objects.filter(status=1).all()
+    queryset = StudentsHomework.objects.filter(status=1)
     serializer_class = StudentsHomeworkCheckingSerilizer
 
 
@@ -144,7 +143,7 @@ class SendingHomeworkViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = StudentsHomework.objects.filter(student__student__id=user.pk).all()
+        queryset = StudentsHomework.objects.filter(student__student__id=user.pk)
         queryset = StudentsHomework.objects.all()
         return queryset
 
@@ -159,9 +158,9 @@ class CourseFlowTimetableViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         course_flow = self.request.query_params.get('course_flow', None)
-        queryset = CourseFlowTimetable.objects.filter.all()
+        queryset = CourseFlowTimetable.objects.filter
         if course_flow is not None:
-            queryset = queryset.filter(course_flow=course_flow).all()
+            queryset = queryset.filter(course_flow=course_flow)
         return queryset
 
 #
