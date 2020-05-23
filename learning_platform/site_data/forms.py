@@ -8,7 +8,6 @@ from learning_platform.celery import app
 class ContactForm(ModelForm):
     class Meta:
         model = UserCorrespondence
-        fields = "__all__"
         exclude = ("status",)
         required = ("subject", "name", "message", "email")
 

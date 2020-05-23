@@ -13,6 +13,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class CourseSerializer(serializers.ModelSerializer):
+    # category = CategorySerializer(read_only=True)
+
     class Meta:
         model = Course
         fields = ('id','category', 'title', 'is_active', 'short_description', 'overview',
@@ -24,6 +26,7 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 class CourseFlowsSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = CourseFlows
         fields = ('id','course', 'start_date', 'code', 'is_over', 'curator')

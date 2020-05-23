@@ -107,7 +107,7 @@ class LectureListView(ListView):
 
     def get_queryset(self):
         pk = self.kwargs['pk']
-        return self.model.objects.filter(course=pk).order_by('sequence_number').all()
+        return self.model.objects.filter(course=pk).order_by('sequence_number')
 
 
 class LectureDetailView(DetailView):
@@ -145,7 +145,7 @@ class FlowTimetableListView(ListView):
 
     def get_queryset(self):
         pk = self.kwargs['pk']
-        return self.model.objects.filter(course_flow=pk).order_by('date').all()
+        return self.model.objects.filter(course_flow=pk).order_by('date')
 
 
 class LectureTimetableDetailView(DetailView):
@@ -182,7 +182,7 @@ class HomeworkListView(ListView):
 
     def get_queryset(self):
         pk = self.kwargs['pk']
-        return self.model.objects.filter(course_flow=pk, is_active=True).all()
+        return self.model.objects.filter(course_flow=pk, is_active=True)
 
 
 class HomeworkDetailView(DetailView):
@@ -222,10 +222,10 @@ class StudentsHomeworkListView(ListView):
             pk = self.kwargs["pk"]
             user = self.request.user.pk
         except KeyError:
-            return self.model.objects.filter(course_flow=pk, student__student__id=user).all()
+            return self.model.objects.filter(course_flow=pk, student__student__id=user)
         queryset = {
-            "student": self.model.objects.filter(course_flow=pk, student__student__id=user).all(),
-            "teacher": self.model.objects.filter(status=1).all()
+            "student": self.model.objects.filter(course_flow=pk, student__student__id=user),
+            "teacher": self.model.objects.filter(status=1)
         }
         return queryset
 

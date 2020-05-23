@@ -45,5 +45,5 @@ class Profile(generic.base.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['students_courses'] = StudentsEnrolled.objects.filter(student=self.request.user.pk).all()
+        context['students_courses'] = StudentsEnrolled.objects.filter(student=self.request.user.pk)
         return context

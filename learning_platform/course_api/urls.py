@@ -12,7 +12,7 @@ app_name = "course_api"
 router = DefaultRouter()
 router.register("course", CourseApiViewSet)
 router.register("course_flows", CourseFlowsViewSet)
-router.register("course_lectures", CourseLectureSet)
+router.register("course_lectures", CourseLectureSet, basename="CourseLecture")
 router.register("homework", HomeworkViewSet)
 router.register("users", MyUserViewSet)
 router.register("students_enrolled", StudentsEnrolledViewSet)
