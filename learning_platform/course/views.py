@@ -62,7 +62,7 @@ class CoursesFlowsListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return self.model.objects.filter(is_over=False).order_by('start_date')
+        return self.model.objects.filter(is_active=True).order_by('start_date')
 
 
 class CourseFlowsDetailView(DetailView):
@@ -94,7 +94,7 @@ class CourseFlowsDeleteView(DeleteView):
 
     def delete(self, request, *args, **kwargs):
         self.obj = self.get_object()
-        self.obj.is_over = True
+        self.obj.is_active = True
         self.obj.save()
         return HttpResponseRedirect(self.success_url)
 

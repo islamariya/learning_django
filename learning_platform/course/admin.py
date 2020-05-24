@@ -39,8 +39,8 @@ class HomeworkAdmin(admin.ModelAdmin):
 
 @admin.register(CourseFlows)
 class CourseFlowsAdmin(admin.ModelAdmin):
-    list_display = ['course', 'code', 'start_date', 'is_over']
-    list_filter = ['course__category', 'course', 'is_over']
+    list_display = ['course', 'code', 'start_date', 'is_active']
+    list_filter = ['course__category', 'course', 'is_active']
     ordering = ('course', '-start_date')
     date_hierarchy = 'start_date'
     search_fields = ('course',)

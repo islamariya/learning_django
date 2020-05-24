@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'rest_framework',
+    'django_filters',
     'graphene_django',
     'site_data.apps.SiteDataConfig',
     'my_user.apps.MyUserConfig',
@@ -112,13 +113,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 AUTH_USER_MODEL = 'my_user.MyUser'
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_PERMISSION_CLASSES':('rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_PERMISSION_CLASSES':('rest_framework.permissions.IsAuthenticated',),
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication'
     ],
-
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'PAGE_SIZE': 100
 }
 

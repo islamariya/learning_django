@@ -29,7 +29,7 @@ class CourseFlowsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CourseFlows
-        fields = ('id','course', 'start_date', 'code', 'is_over', 'curator')
+        fields = ('id','course', 'start_date', 'code', 'is_active', 'curator')
 
     def to_representation(self, instance):
         self.fields['course'] = CourseSerializer(read_only=True)

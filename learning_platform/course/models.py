@@ -83,7 +83,7 @@ class CourseFlows(models.Model):
     curator = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='course_flows',
                                 verbose_name='Куратор')
     code = models.CharField(max_length=50, unique=True, verbose_name='Код потока')
-    is_over = models.BooleanField(default=False, verbose_name='Поток завершен')
+    is_active = models.BooleanField(default=True, verbose_name='Идет обучение')
 
     class Meta:
         verbose_name = 'Поток (набор) курса'
