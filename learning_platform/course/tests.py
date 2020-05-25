@@ -1,7 +1,6 @@
 import json
 
 from graphene_django.utils.testing import GraphQLTestCase
-from django.test import TestCase
 
 from learning_platform.schema import schema
 
@@ -18,6 +17,7 @@ class GQLTestCase(GraphQLTestCase):
                             shortDescription
                             price
                             duration
+            }
             }
             ''',
             op_name='allCourses'
@@ -38,6 +38,7 @@ class GQLTestCase(GraphQLTestCase):
                     version
                     duration
                     price
+            }
             }
             ''',
             op_name='retrieveCourse'

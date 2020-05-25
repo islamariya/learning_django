@@ -1,5 +1,7 @@
 import graphene
 
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from django.shortcuts import get_object_or_404
 from graphene_django.types import DjangoObjectType
 
 from .models import (CourseCategory,
@@ -70,13 +72,18 @@ class CourseCategoryMutation(graphene.Mutation):
 
     def mutate(self, info, category_id, title, is_active):
         result = False
-        category_instance = CourseCategory.objects.get(pk=category_id)
-        if category_instance:
+        try:
+            category_instance = CourseCategory.objects.get(pk=category_id)
+        except (ObjectDoesNotExist, MultipleObjectsReturned):
+            category_instance = None
+            print("Объект не найден или их больше 1")
+
+        if category_instance is not None:
             category_instance.title = title
             category_instance.is_active = is_active
             category_instance.save()
             result = True
-            return CourseCategoryMutation(result=result, course_category = category_instance)
+            return CourseCategoryMutation(result=result, course_category=category_instance)
         return CourseCategoryMutation(result=result, course_category = None)
 
 
@@ -110,50 +117,41 @@ class Query:
 
     retrieve_student_homework = graphene.Field(StudentsHomeworkType, id=graphene.Int())
 
-    def resolve_retrieve_course(self, info, *args, **kwargs):
-        id = kwargs.get('id')
-        if id is not None:
-            return Course.objects.get(pk=id)
-        return None
+    def resolve_retrieve_course(self, info, id):
+        return get_object_or_404(Course, pk=id)
 
     def resolve_all_courses(self, info, *args, **kwargs):
-        return Course.objects.filter(is_active=True).all()
+        return Course.objects.filter(is_active=True)
 
     def resolve_retrieve_lesson(self, info, id):
-        return CourseLecture.objects.get(pk=id)
+        return get_object_or_404(CourseLecture, pk=id)
 
     def resolve_all_lessons_in_course(self, info, course, *args, **kwargs):
-        return CourseLecture.objects.filter(is_active=True, course=course).all()
+        return CourseLecture.objects.filter(is_active=True, course=course)
 
     def resolve_all_course_flows(self, info, *args, **kwargs):
-        return CourseFlows.objects.filter(is_over=False).all()
+        return CourseFlows.objects.filter(is_over=False)
 
     def resolve_retrieve_course_flow(self, info, id):
-        return CourseFlows.objects.get(pk=id)
+        return get_object_or_404(CourseFlows, pk=id)
 
     def resolve_all_course_homework(self, info, course_flow, *args, **kwargs):
-        return Homework.objects.filter(course_flow=course_flow).all()
+        return Homework.objects.filter(course_flow=course_flow)
 
     def resolve_retrieve_course_homework(self, info, id):
-        return Homework.objects.get(pk=id)
+        return get_object_or_404(Homework, pk=id)
 
     def resolve_course_timetable(self, info, course_flow):
-        return CourseFlowTimetable.objects.filter(course_flow=course_flow).all()
+        return CourseFlowTimetable.objects.filter(course_flow=course_flow)
 
     def resolve_retrieve_course_flow_lesson(self, info, id):
-        return CourseFlowTimetable.objects.get(pk=id)
+        return get_object_or_404(CourseFlowTimetable, pk=id)
 
     def resolve_all_students_enrolled(self, info, course_flow):
-        return StudentsEnrolled.objects.filter(course_flow=course_flow).all()
+        return StudentsEnrolled.objects.filter(course_flow=course_flow)
 
     def resolve_all_students_homework(self, info, course_flow, student):
-        return StudentsHomework.objects.filter(course_flow=course_flow, student__student__id=student).all()
+        return StudentsHomework.objects.filter(course_flow=course_flow, student__student__id=student)
 
     def resolve_retrieve_student_homework(self, info, id):
-        return StudentsHomework.objects.get(pk=id)
-
-
-    # if info.context.user.is_student:
-    #     return Course.objects.filter(is_active=True).all()
-    # else:
-    #     return Course.objects.none()
+        return get_object_or_404(StudentsHomework, pk=id)
